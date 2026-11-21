@@ -1,0 +1,56 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "discord-gateway-bot-cloudflare-workers",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-19",
+  "observability": {
+    "enabled": true
+  },
+  "upload_source_maps": true,
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "GATEWAY",
+        "class_name": "GatewayContainer"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": [
+        "GatewayContainer"
+      ]
+    }
+  ],
+  "containers": [
+    {
+      "class_name": "GatewayContainer",
+      "image": "./containers/gateway/Dockerfile",
+      "instance_type": "lite",
+      "max_instances": 1
+    }
+  ],
+  "triggers": {
+    "crons": [
+      "0 * * * *" // every hour
+    ]
+  },
+  "vars": {
+    "DISCORD_SERVER_ID": "",
+    "DISCORD_DEFAULT_COLOR": "#ffe449",
+    "DISCORD_WELCOME_CHANNEL_ID": "",
+    "DISCORD_MOD_LOG_CHANNEL_ID": ""
+  },
+  "secrets_store_secrets": [
+    {
+      "binding": "DISCORD_BOT_TOKEN",
+      "store_id": "<SECRETS_STORE_ID>",
+      "secret_name": "DISCORD_BOT_TOKEN"
+    }
+  ]
+}

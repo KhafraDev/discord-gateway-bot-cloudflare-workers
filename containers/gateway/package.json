@@ -1,0 +1,19 @@
+{
+  "name": "discord-bot-gateway",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node gateway.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@discordjs/rest": "^2.6.3",
+    "@discordjs/ws": "^2.0.4",
+    "discord-api-types": "^0.38.56"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.1",
+    "typescript": "^5.9.3"
+  }
+}
